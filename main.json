@@ -11,3 +11,5 @@ AppConfig = {
     cameraComponentDataJSON: null
 
 };
+npm rebuild node-sass
+
