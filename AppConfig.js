@@ -6,8 +6,8 @@ AppConfig = {
 
     "ambiantMusicUUID": "4933d720-f509-4174-80e1-888e608fb356",
 
-    "enableVideoScreens": true,
+    "enableVideoScreens": "true",
 
-    "cameraComponentDataJSON": null
+    "cameraComponentDataJSON": "null"
 
 }
