@@ -8,6 +8,6 @@ AppConfig = {
 
     enableVideoScreens: true,
 
-    cameraComponentDataJSON: null
+    cameraComponentDataJSON: true
 
 };
