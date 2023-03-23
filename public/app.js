@@ -238,31 +238,36 @@ function attachScripts(cameraEntity, characterController)
 //--------------------------------------------------------------------------------------------------
 async function initViewport(cameraEntity)
 {
-    console.debug('++++++++++++++++++ INIIIIIIIIIIIIIIIIIT')
-    const viewports = [
-        {
-            id: 0,
-            left: 0, top: 0, width: 1, height: 1,
-            camera: cameraEntity
-        }
-    ];
-    SDK3DVerse.setViewports(viewports);
-    SetInformation("");
-    FadeOut();
-
+    let cameraComponent;
     if(AppConfig.cameraComponentDataJSON)
     {
-        await SDK3DVerse.engineAPI.overrideComponent([cameraEntity], 'camera');
-
-        const cameraComponent = cameraEntity.getComponent("camera");
-        cameraEntity.setComponent("camera", {
+        cameraComponent = SDK3DVerse.utils.clone(cameraEntity.getComponent("camera"));
+        cameraComponent = {
             ...cameraComponent,
             dataJSON: {
                 ...cameraComponent.dataJSON,
                 ...AppConfig.cameraComponentDataJSON
             }
-        });
-
-        SDK3DVerse.engineAPI.propagateChanges();
+        };
     }
+    else
+    {
+        cameraComponent = SDK3DVerse.engineAPI.cameraAPI.getDefaultCameraValues();
+    }
+
+    console.debug('initViewport', cameraComponent);
+    const viewports = [
+        {
+            id: 0,
+            left: 0, top: 0, width: 1, height: 1,
+            camera: cameraEntity,
+            // Use the default_camera_component scene settings for the 3rd person camera of the player
+            defaultCameraValues: cameraComponent
+        }
+    ];
+    await SDK3DVerse.setViewports(viewports);
+    SetInformation("");
+    FadeOut();
+
+    console.debug('initViewport done for camera:', cameraEntity);
 }
